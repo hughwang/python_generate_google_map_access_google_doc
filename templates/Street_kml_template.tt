@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+<Document>
+  <name>DC Posters</name>
+  <description><![CDATA[]]></description>
+  <Folder>
+  <name>Shopping Plaza, Street</name>
+  <Style id="street_to_visit">
+    <LineStyle>
+      <color>73FF0000</color>
+      <width>5</width>
+    </LineStyle>
+      <PolyStyle>
+      <color>26FF0000</color>
+      <fill>1</fill>
+      <outline>1</outline>
+    </PolyStyle>
+    <IconStyle>
+	<color>73FF0000</color>
+	<scale>1.1</scale>
+	<Icon>
+		<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+	</Icon>
+   </IconStyle>
+  </Style>
+  <Placemark>
+    <name>[% STREET_NAME %]</name>
+    <description><![CDATA[<div dir="ltr">[% DESCRIPTION %]</div>]]></description>
+    <styleUrl>#street_to_visit</styleUrl>
+
+    [% IF maptype == 'line' %]
+    <LineString>
+      <tessellate>1</tessellate>
+      <coordinates>
+      [% COORDINATES_LINES %]
+      </coordinates>
+    </LineString>
+   [% ELSIF  maptype == 'shape' %]
+       <Polygon>
+      <outerBoundaryIs>
+        <LinearRing>
+          <tessellate>1</tessellate>
+          <coordinates>
+          [% COORDINATES_LINES %]
+          </coordinates>
+        </LinearRing>
+      </outerBoundaryIs>
+    </Polygon>
+   [% ELSIF  maptype == 'point' %]
+       <Point>
+          <coordinates>
+          [% COORDINATES_LINES %]
+          </coordinates>
+      </Point>
+   [% ELSE %]
+   [% END %]
+  </Placemark>
+  </Document>
+</kml>

@@ -1,0 +1,12 @@
+{
+  "state_maps" : [
+      { "State":"DC",
+        "GOOGLE_MAP_KML_URL":"http://www.google.com/maps/d/kml?forcekml=1&mid=z5QeVGweEEJc.k78J8kdMHGMQ&lid=z5QeVGweEEJc.kycfxG-8Vgr8"
+      }
+   ],
+ "GOOGLE_DOC_SPREADSHEET_NAME":"2015_SYSO_Door_to_Door_Delivery",
+ "GOOGLE_DOC_SPREADSHEET_TAB_NAME":"syso_d2d",
+ "OUTPUT_FOLDER":"output",
+ "WEB_URL_FOR_STORED_MAP":"http://www.ntdnetwork.net/yonghuiw/2015DC_SYSO_Deliver",
+ "EXCEL_URL":"https://docs.google.com/spreadsheets/d/1qsgpOdxXZv_wz6TJF__3fvK4FdIezcfrutI0r4x5_Nc/edit#gid=0"
+}

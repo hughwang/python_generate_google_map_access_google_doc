@@ -1,0 +1,12 @@
+Zip,Map,AssignedTo,Count,City,State
+Detailes,"https://docs.google.com/spreadsheet/ccc?key=0AlN6egnLibXEdDl6YjdSWlpTejVfLU1TUXF0RmJqb3c#gid=0",,,,
+[% FOREACH zip IN zips  -%]
+[%    USE wrap;	        
+	         Article_Zip = zip.0;
+	         Article_Count = zip.1;
+	         Article_City = zip.2;
+	         Article_State = zip.3;
+		 Article_AssignedTo = zip.4;
+-%]
+[% Article_Zip %], http://www.ntdnetwork.net/yonghuiw/MusicPlaces2013/output/[% Article_Zip %].htm,[% Article_AssignedTo %],[% Article_Count %],[% Article_City %],[% Article_State %]
+[% END -%]

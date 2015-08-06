@@ -1,0 +1,12 @@
+Zip,AssignedTo,LocationsCount,City,State,Distance,Map
+[% FOREACH zip IN zips  -%]
+[%    USE wrap;	        
+	 Article_Zip = zip.0;
+	 Article_Count = zip.1;
+	 Article_City = zip.2;
+	 Article_State = zip.3;
+	 Article_AssignedTo = zip.4;
+	 Distance = zip.5;
+-%]
+[% Article_Zip %],[% Article_AssignedTo %],[% Article_Count %],[% Article_City %],[% Article_State %],[% Distance %],http://www.ntdnetwork.net/yonghuiw/2015BalOffice/[% Article_Zip %].htm
+[% END -%]

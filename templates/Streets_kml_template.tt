@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<kml xmlns='http://www.opengis.net/kml/2.2'>
+<Document>
+  <name>DC Posters</name>
+  <description><![CDATA[]]></description>
+  <Folder>
+  <name>Shopping Plaza, Street</name>
+
+  [% FOREACH street IN streets  -%]
+  [%    USE wrap;	        
+	 street_name = street.0;
+	 street_description = street.1;
+	 street_style = street.2;
+	 street_coordinates_lines = street.3;
+	 maptype = street.4;
+	 url = street.8;
+  %]
+  
+  <Placemark>
+    <name>[% street_name %]</name>
+    <description><![CDATA[[% street_description %] <a href="[% url %]">map</a>]]></description>
+    <styleUrl>[% street_style %]</styleUrl>
+    [% IF maptype == 'line' %]
+    <LineString>
+      <tessellate>0</tessellate>
+      <coordinates>[% street_coordinates_lines %]</coordinates>
+    </LineString>
+   [% ELSIF  maptype == 'shape' %]
+       <Polygon>
+      <outerBoundaryIs>
+        <LinearRing>
+          <tessellate>0</tessellate>
+          <coordinates>[% street_coordinates_lines %]</coordinates>
+        </LinearRing>
+      </outerBoundaryIs>
+    </Polygon>
+   [% ELSIF  maptype == 'point' %]
+       <Point>
+          <coordinates>[% street_coordinates_lines %]</coordinates>
+      </Point>
+   [% ELSE %]
+   [% END %]
+  </Placemark>
+  [% END %]
+  </Folder>
+  <Style id="assigned_street">
+    <LineStyle>
+      <color>ff92357C</color>
+      <width>5</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>1492357C</color>
+      <fill>1</fill>
+      <outline>1</outline>
+    </PolyStyle>
+    <IconStyle>
+	<color>ff92357C</color>
+	<scale>1.1</scale>
+	<Icon>
+		<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+	</Icon>
+   </IconStyle>
+  </Style>
+    <Style id="un_assigned_street">
+    <LineStyle>
+      <color>ff7782FF</color>
+      <width>5</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>ff7782FF</color>
+      <fill>1</fill>
+      <outline>1</outline>
+    </PolyStyle>
+    <IconStyle>
+	<color>ff7782FF</color>
+	<scale>1.1</scale>
+	<Icon>
+		<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+	</Icon>
+   </IconStyle>
+  </Style>
+  [% FOREACH style IN styles  -%]
+  [%    USE wrap;	        
+	 Style_name = style.0;
+	 Style_color = style.1;
+  %]
+
+  <Style id="[% Style_name %]">
+    <LineStyle>
+      <color>[% Style_color %]</color>
+      <width>5</width>
+    </LineStyle>
+    <PolyStyle>
+      <color>[% Style_color %]</color>
+      <fill>1</fill>
+      <outline>1</outline>
+    </PolyStyle>    
+     <IconStyle>
+	<color>[% Style_color %]</color>
+	<scale>1.1</scale>
+	<Icon>
+		<href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+	</Icon>
+   </IconStyle>
+ </Style>
+  [% END %]
+
+  </Document>
+</kml>
+
+
+	
