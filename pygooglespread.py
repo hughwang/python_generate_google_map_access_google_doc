@@ -140,6 +140,7 @@ def    ProcessForState(config_data,worksheet,State,Google_Map_KML,collum_name_di
         for Street in placesmarks:
                 print Street['name']
                 StreetName = Street['name']
+
                 StreetName = StreetName.strip()
                 StreetName = RemoveStrangeCharacter(StreetName)
 
@@ -160,6 +161,7 @@ def    ProcessForState(config_data,worksheet,State,Google_Map_KML,collum_name_di
                 poly_points=[]
                 coordinates_list = coordinates.split(' ')
                 offices_list=[]
+                offices_list_for_overall_map=[]
                 for coordinate_string in coordinates_list:
                         longitude,latitude,z=coordinate_string.split(',')
                         poly_points.append((float(latitude), float(longitude)))
@@ -168,30 +170,47 @@ def    ProcessForState(config_data,worksheet,State,Google_Map_KML,collum_name_di
                 # find out all locations within this polygon
 
                 count_number = 0
+                count_id = 1
                 this_city=''
                 this_Address=''
+                this_State=''
                 for row in rows: # cursors are iterable
                         location_string ="%s_%s"%(row.Latitude,row.Longitude)
                         if location_string in ProcessedLocations:
                                 continue
                         point = Point(row.Latitude,row.Longitude)
                         if point.within(poly):
-                                #print "Point %s,%s in the Polygon"%(row.Latitude,row.Longitude)
+                            #print "Point %s,%s in the Polygon"%(row.Latitude,row.Longitude)
+                            if count_number % 4 == 0:  
                                 Office={}
-                                Office['ID']=row.ID
+                                Office['ID']=count_id                                
                                 Office['Address']=row.Address
                                 Office['State']=row.State
                                 Office['City']=row.City
                                 Office['Zip']=row.Zip
                                 Office['Latitude']=row.Latitude
-                                Office['Longitude']=row.Longitude
-
-                   
+                                Office['Longitude']=row.Longitude                                          
                                 offices_list.append(Office)
-                                this_city = row.City
-                                this_State = row.State
-                                this_Address = row.Address
-                                ProcessedLocations[location_string] = 1
+                                count_id= count_id+1
+                                if count_number ==0:
+                                        Office_all={}
+                                        Office_all['ID']=StreetName                            
+                                        Office_all['Address']=row.Address
+                                        Office_all['State']=row.State
+                                        Office_all['City']=row.City
+                                        Office_all['Zip']=row.Zip
+                                        Office_all['Latitude']=row.Latitude
+                                        Office_all['Longitude']=row.Longitude  
+                                        offices_list_for_overall_map.append(Office_all)
+
+                                        this_city = row.City
+                                        this_State = row.State
+                                        this_Address = row.Address
+                                
+                            count_number = count_number + 1
+
+                            
+                        ProcessedLocations[location_string] = 1
 
 
                 if not StreetName in streetsAssign:
@@ -212,13 +231,13 @@ def    ProcessForState(config_data,worksheet,State,Google_Map_KML,collum_name_di
                                           'MapType':mapType,
                                           'Polygon_Points':poly_points,
                                           'mapurl':mapurl,
-                                          'Office_List':[]})
+                                          'Office_List':offices_list_for_overall_map})
                 AllStreets['NotVisited'].append({'StreetName':StreetName,
                                           'StreetStyle':StreetStyle,
                                           'MapType':mapType,
                                           'Polygon_Points':poly_points,
                                           'mapurl':mapurl,
-                                          'Office_List':[]})
+                                          'Office_List':offices_list_for_overall_map})
 
                 if StreetName not in AllStreets:
                         AllStreets[StreetName] = []
